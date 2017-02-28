@@ -2,6 +2,8 @@
 
 namespace App\Providers\Readers;
 
+use Illuminate\Support\Facades\Cache;
+
 use \GuzzleHttp\Client;
 use \GuzzleHttp\Exception\RequestException;
 
@@ -80,14 +82,17 @@ class CMS implements CMSInterface
      */
     public function get($method, array $query = [])
     {
+        $query = ['query' => $query];
+        // $cacheKey = $method . http_build_query($query);
+        // if ($return = Cache::get($cacheKey)) return $return;
         try {
-            $query = ['query' => $query];
             $response = $this->client->get($this->endpoint . $method, $query);
             $return = [
                 'results' => json_decode((string) $response->getBody(), true),
                 'total'   => $response->getHeaderLine('X-WP-Total'),
                 'pages'   => $response->getHeaderLine('X-WP-TotalPages')
             ];
+            // if ($return['results']) Cache::forever($cacheKey, $return);
         } catch (RequestException $e) {
             $error['message'] = $e->getMessage();
             if ($e->getResponse()) {

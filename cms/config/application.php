@@ -67,6 +67,7 @@ define('AUTH_SALT', env('AUTH_SALT'));
 define('SECURE_AUTH_SALT', env('SECURE_AUTH_SALT'));
 define('LOGGED_IN_SALT', env('LOGGED_IN_SALT'));
 define('NONCE_SALT', env('NONCE_SALT'));
+define('WP_CACHE_KEY_SALT', env('WP_CACHE_KEY_SALT'));
 
 /**
  * Custom Settings

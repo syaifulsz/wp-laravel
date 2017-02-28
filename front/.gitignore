@@ -1,9 +1,12 @@
 /node_modules
 /public/storage
 /public/hot
+/public/themes
 /storage/*.key
 /vendor
 /.idea
+/.sass-cache
 Homestead.json
 Homestead.yaml
 .env
+composer.lock

@@ -11,5 +11,5 @@
 |
 */
 
-Route::get('/', ['as' => 'home', 'uses' => 'SiteController@index']);
-Route::get('/{category_slug}/{post_slug}/{post_id}', ['as' => 'post', 'uses' => 'SiteController@post']);
+Route::get('/', ['as' => 'home', 'uses' => 'SiteController@index', 'middleware' => 'cachepage']);
+Route::get('/{category_slug}/{post_slug}/{post_id}', ['as' => 'post', 'uses' => 'SiteController@post', 'middleware' => 'cachepage']);

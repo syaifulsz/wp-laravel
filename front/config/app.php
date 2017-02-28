@@ -12,7 +12,7 @@ return [
     | any other location as required by the application or its packages.
     */
 
-    'name' => 'Laravel',
+    'name' => 'sszblog',
 
     /*
     |--------------------------------------------------------------------------
@@ -228,6 +228,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'CMS' => \App\Providers\CMSServiceProvider::class,
+        'ViewHelper' => \App\Components\ViewHelper::class,
 
     ],
 

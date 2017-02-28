@@ -14,26 +14,29 @@ class SiteController extends Controller
      * Home Page
      * @return View::class();
      */
-     public function index()
-     {
-         $cms = new \CMS();
-         $posts = $cms->posts();
+    public function index()
+    {
+        $cms = new \CMS();
+        $posts = $cms->posts();
 
-         $data = [
-             'pageTitle' => 'Blog',
-             'posts' => []
-         ];
-         $data['posts'] = array_key_exists('results', $posts) && $posts['results'] ? $posts['results'] : [];
+        $data = [
+            'pageTitle' => 'Blog',
+            'posts' => []
+        ];
+        $data['posts'] = array_key_exists('results', $posts) && $posts['results'] ? $posts['results'] : [];
 
-         View::share($data);
-         return view('blog.index');
-     }
+        View::share($data);
+        return view('blog.index');
+    }
 
-     /**
-      * Article Page
-      * @return View::class();
-      */
-     public function post($category_slug, $post_slug, $post_id)
+    /**
+     * Article Page
+     * @param $category_slug
+     * @param $post_slug
+     * @param $post_id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function post($category_slug, $post_slug, $post_id)
      {
          $cms = new \CMS();
          $post = $cms->getPost($post_id);
@@ -50,4 +53,6 @@ class SiteController extends Controller
          View::share($data);
          return view('blog.post');
      }
+
+
 }

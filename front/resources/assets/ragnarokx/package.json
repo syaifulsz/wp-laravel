@@ -1,0 +1,27 @@
+{
+    "name": "ragnarokx",
+    "version": "1.0.0",
+    "description": "RAGNAROKX is a modern Bootstrap stack that helps you get started with the best development tools and project framework structure.",
+    "main": "index.php",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/syaifulsz/ragnarokx.git"
+    },
+    "keywords": [
+        "ragnarokx"
+    ],
+    "author": "Syaiful Shah Zinan <i.works@live.com>",
+    "license": "ISC",
+    "homepage": "https://github.com/syaifulsz/ragnarokx#readme",
+    "dependencies": {
+        "grunt": "^1.0.1",
+        "grunt-cli": "^1.2.0",
+        "grunt-contrib-clean": "^1.0.0",
+        "grunt-contrib-sass": "^1.0.0",
+        "grunt-contrib-uglify": "^2.0.0",
+        "grunt-contrib-watch": "^1.0.0"
+    }
+}

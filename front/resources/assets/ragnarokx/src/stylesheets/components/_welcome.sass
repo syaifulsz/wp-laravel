@@ -1,0 +1,69 @@
+.ragnarokx-welcome
+    height: 100%
+
+    body
+        height: 100%
+
+    &.ragnarokx-welcome--dark
+
+        body
+            background-color: #333333
+
+.ragnarokx-welcome--dark
+
+    .ragnarokx-welcome__cover
+        color: #999999
+
+    .ragnarokx-welcome__cover-heading
+        color: #666666
+
+        strong
+            color: #FFFFFF
+
+.ragnarokx-welcome__wrapper
+    width: 100%
+    height: 100%
+    display: table
+
+.ragnarokx-welcome__wrapper-inner
+    display: table-cell
+    vertical-align: middle
+
+.ragnarokx-welcome__cover
+    margin-left: 30%
+    margin-right: 30%
+    text-align: center
+    font-size: 16px
+    color: #555555
+
+.ragnarokx-welcome__cover-heading
+    margin-top: 0
+    margin-left: 0
+    margin-right: 0
+    margin-bottom: 15px
+    padding: 0
+    font-weight: 300
+    color: #CCCCCC
+    animation-name: welcome
+    animation-duration: 4s
+    animation-fill-mode: forwards
+
+    strong
+        color: #555555
+
+.ragnarokx-welcome__cover-description
+    opacity: 0
+    transform: translate3d(100px, 0, 0)
+    animation-name: welcome
+    animation-duration: 4s
+    animation-delay: 2s
+    animation-fill-mode: forwards
+
+@keyframes welcome
+
+    from
+        opacity: 0
+        transform: translate3d(100px, 0, 0)
+    to
+        opacity: 1
+        transform: translate3d(0, 0, 0)

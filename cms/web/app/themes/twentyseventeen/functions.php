@@ -1,5 +1,7 @@
 <?php
 
+add_theme_support( 'post-thumbnails' );
+
 add_action('admin_head', 'my_custom_fonts');
 
 function my_custom_fonts() {
@@ -26,3 +28,19 @@ function enqueue_custom_admin_style() {
         wp_enqueue_style( 'wp_admin_css__font_droid_sans' );
 }
 add_action( 'admin_enqueue_scripts', 'enqueue_custom_admin_style' );
+
+// function my_project_updated_send_email( $post_id ) {
+//
+// 	// If this is just a revision, don't send the email.
+// 	if ( wp_is_post_revision( $post_id ) )
+// 		return;
+//
+// 	$post_title = get_the_title( $post_id );
+// 	$post_url = get_permalink( $post_id );
+// 	$subject = 'A post has been updated';
+//
+// 	$message = "A post has been updated on your website:\n\n";
+// 	$message .= $post_title . ": " . $post_url;
+//
+// }
+// add_action( 'save_post', 'my_project_updated_send_email' );

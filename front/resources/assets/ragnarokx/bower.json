@@ -1,0 +1,27 @@
+{
+  "name": "ragnarokx",
+  "authors": [
+    "Syaiful Shah Zinan <i.works@live.com>"
+  ],
+  "description": "RAGNAROKX is a modern Bootstrap stack that helps you get started with the best development tools and project framework structure.",
+  "main": "index.php",
+  "keywords": [
+    "ragnarokx"
+  ],
+  "license": "MIT",
+  "homepage": "index.php",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-sass": "^3.3.7",
+    "jquery": "^3.1.1",
+    "html5shiv": "^3.7.3",
+    "respond": "^1.4.2"
+  }
+}
