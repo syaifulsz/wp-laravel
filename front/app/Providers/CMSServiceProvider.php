@@ -16,8 +16,8 @@ class CMSServiceProvider extends ServiceProvider
     public function __construct()
     {
         $this->reader = new \App\Providers\Readers\CMS();
-        $this->reader->endpoint = config('cms-api.endpoint');
-        $this->reader->auth = config('cms-api.auth');
+        $this->reader->endpoint = config('cms.api');
+        $this->reader->useCache = config('cms.useCache.api');
     }
 
     public function posts($page = null)

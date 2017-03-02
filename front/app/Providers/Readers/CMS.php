@@ -11,13 +11,13 @@ class CMS implements CMSInterface
 {
     public $client;
     public $endpoint;
-    public $auth;
+    public $useCache;
 
-    public function __construct($endpoint = null, $auth = null)
+    public function __construct($endpoint = null, $auth = null, $useCache = false)
     {
         $this->client = new Client;
         $this->endpoint = $endpoint;
-        $this->endpoint = $auth;
+        $this->useCache = $useCache;
     }
 
     /**
@@ -83,8 +83,9 @@ class CMS implements CMSInterface
     public function get($method, array $query = [])
     {
         $query = ['query' => $query];
-        // $cacheKey = $method . http_build_query($query);
-        // if ($return = Cache::get($cacheKey)) return $return;
+        $cacheKey = $method . http_build_query($query);
+        if (($return = Cache::get($cacheKey)) && $this->useCache) return $return;
+
         try {
             $response = $this->client->get($this->endpoint . $method, $query);
             $return = [
@@ -92,7 +93,11 @@ class CMS implements CMSInterface
                 'total'   => $response->getHeaderLine('X-WP-Total'),
                 'pages'   => $response->getHeaderLine('X-WP-TotalPages')
             ];
-            // if ($return['results']) Cache::forever($cacheKey, $return);
+
+            if ($return['results']) {
+                Cache::put($cacheKey, $return, 60);
+                Cache::forever("previous_{$cacheKey}", $return);
+            }
         } catch (RequestException $e) {
             $error['message'] = $e->getMessage();
             if ($e->getResponse()) {
@@ -104,6 +109,8 @@ class CMS implements CMSInterface
                 'total'   => 0,
                 'pages'   => 0
             ];
+            Log::error(__METHOD__, $return);
+            if (($return = Cache::get("previous_{$cacheKey}")) && $this->useCache) return $return;
         }
         return $return;
     }
