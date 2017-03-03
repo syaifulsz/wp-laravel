@@ -74,6 +74,30 @@ class CMS implements CMSInterface
     }
 
     /**
+     * Get all medias
+     *
+     * @uses   obj      \App\Providers\Params\Media  params for Media's arguments
+     * @param  obj      $args
+     * @return array
+     */
+    public function medias(\App\Providers\Params\Media $args = null)
+    {
+        return $this->get('media', $args ? $args->toArray() : []);
+    }
+
+    /**
+     * Get specific media by ID
+     * @uses   obj      \App\Providers\Params\Media  params for Media's arguments
+     * @param  str      $id
+     * @param  obj      $args
+     * @return array
+     */
+    public function getMedia($id, \App\Providers\Params\Media $args = null)
+    {
+        return $this->get("media/{$id}", $args ? $args->toArray() : []);
+    }
+
+    /**
      * Get data from API
      *
      * @param  string   $method
@@ -109,7 +133,7 @@ class CMS implements CMSInterface
                 'total'   => 0,
                 'pages'   => 0
             ];
-            Log::error(__METHOD__, $return);
+            \Log::error(__METHOD__, $return);
             if (($return = Cache::get("previous_{$cacheKey}")) && $this->useCache) return $return;
         }
         return $return;

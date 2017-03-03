@@ -2,20 +2,29 @@
 
 @section('content')
     <div class="container">
-        {{-- <li><a href="{{ $post->link }}">{{ $post->title }}</a></li> --}}
-        <div class="row">
         @foreach ($posts as $post)
-                <div class="col-sm-6 col-md-4">
-                    <div class="thumbnail">
-                        <img src="http://placehold.it/350x150" alt="{{ $post->title }}">
-                        <div class="caption">
-                            <h2>{{ $post->title }}</h2>
-                            {!! $post->excerpt !!}
-                            <p><a href="{{ $post->link }}" class="btn btn-primary" role="button">Read</a>
-                        </div>
-                    </div>
+            {{-- {{ var_dump($post->featured_media->media_details['sizes']) }} --}}
+            {{-- {{ var_dump($post->toArray()) }} --}}
+            <div class="panel  panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{ $post->title }}</h3>
                 </div>
+                <div class="panel-body  clearfix">
+                    @if ($post->featured_media->media())
+                        <a href="{{ $post->link }}" class="thumbnail  pull-left">
+                            <img src="{{ $post->featured_media->media() }}" alt="{{ $post->title }}">
+                        </a>
+                    @endif
+                    <pre>{{ $post->excerpt() }}</pre>
+                    <div class="clearfix">
+                        <a href="{{ $post->link }}" class="btn  btn-primary  pull-right" role="button">Read More</a>
+                    </div>
+                    <hr>
+                    <small class="text-muted">
+                        <strong>Created at:</strong> {{ $post->created_at->format('Y-m-d') }}, <strong>Modified at:</strong> {{ $post->modified_at->format('Y-m-d') }}
+                    </small>
+                </div>
+            </div>
         @endforeach
-        </div>
     </div>
 @endsection

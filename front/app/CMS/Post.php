@@ -219,4 +219,10 @@ class Post extends Model
             'post_id' => $this->attributes['id']
         ]);
     }
+
+    public function excerpt($limit = 0)
+    {
+        $excerpt = strip_tags($this->attributes['excerpt']);
+        return $limit ? str_limit($excerpt, $limit) : strip_tags($excerpt);
+    }
 }

@@ -4,7 +4,7 @@ namespace App\Providers\Params;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Post extends Model
+class Media extends Model
 {
     protected $fillable = [
         'context',
@@ -20,14 +20,13 @@ class Post extends Model
         'offset',
         'order',
         'orderby',
+        'parent',
+        'parent_exclude',
         'slug',
         'status',
-        'categories',
-        'categories_exclude',
-        'tags',
-        'tags_exclude',
-        'sticky',
-        'password'
+        'filter',
+        'media_type',
+        'mime_type'
     ];
 
     /**
@@ -110,6 +109,18 @@ class Post extends Model
     protected $orderby = 'date';
 
     /**
+     * Limit result set to those of particular parent ids
+     * @var array
+     */
+    protected $parent = [];
+
+    /**
+     * Limit result set to all items except those of a particular parent id
+     * @var array
+     */
+    protected $parent_exclude = [];
+
+    /**
      * Limit result set to posts with one or more specific slugs.
      * @var str
      */
@@ -122,42 +133,21 @@ class Post extends Model
     protected $status = 'publish';
 
     /**
-     * Limit result set to all items that have the specified term assigned
-     * in the categories taxonomy
-     * @var array
-     */
-    protected $categories = [];
-
-    /**
-     * Limit result set to all items except those that have the specified
-     * term assigned in the categories taxonomy
-     * @var array
-     */
-    protected $categories_exclude = [];
-
-    /**
-     * Limit result set to all items that have the specified term assigned
-     * in the tags taxonomy
-     * @var array
-     */
-    protected $tags = [];
-
-    /**
-     * Limit result set to all items except those that have the specified
-     * term assigned in the tags taxonomy
-     * @var array
-     */
-    protected $tags_exclude = [];
-
-    /**
-     * Limit result set to items that are sticky
-     * @var bool
-     */
-    protected $sticky;
-
-    /**
-     * The password for the post if it is password protected.
+     * Use WP Query arguments to modify the response; private query vars
+     * require appropriate authorization.
      * @var str
      */
-    protected $password;
+    protected $filter;
+
+    /**
+     * Limit result set to attachments of a particular media type
+     * @var str     values: image, video, audio, application
+     */
+    protected $media_type;
+
+    /**
+     * Limit result set to attachments of a particular MIME type
+     * @var str
+     */
+    protected $mime_type;
 }
