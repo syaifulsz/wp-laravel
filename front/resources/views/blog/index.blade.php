@@ -20,9 +20,17 @@
                         <a href="{{ $post->link }}" class="btn  btn-primary  pull-right" role="button">Read More</a>
                     </div>
                     <hr>
-                    <small class="text-muted">
+                    <div class="text-muted cf">
+                        @if ($post->author->avatar())
+                            <a href="{{ $post->link }}" class="pull-left">
+                                <img src="{{ $post->author->avatar() }}" alt="{{ $post->title }} - {{ $post->author->name }}" class="img-circle">
+                            </a>
+                        @endif
+                        <strong>Author:</strong> {{ $post->author->name }}
+                    </div>
+                    <div class="text-muted">
                         <strong>Created at:</strong> {{ $post->created_at->format('Y-m-d') }}, <strong>Modified at:</strong> {{ $post->modified_at->format('Y-m-d') }}
-                    </small>
+                    </div>
                 </div>
             </div>
         @endforeach

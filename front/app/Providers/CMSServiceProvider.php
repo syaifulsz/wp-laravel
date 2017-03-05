@@ -39,6 +39,7 @@ class CMSServiceProvider extends ServiceProvider
     {
         $categories = [];
         $media = [];
+        $author = [];
         foreach ($post as $post_key => $post_value) {
 
             // if rendered exist, use rendered
@@ -53,12 +54,14 @@ class CMSServiceProvider extends ServiceProvider
                 }
             }
 
-
             if ($post_key == 'featured_media' && $post_value) {
                 $media = $this->getMedia($post_value);
-                if (array_key_exists('results', $media) && $media['results']) {
-                    $media = $media['results'];
-                }
+                if (array_key_exists('results', $media) && $media['results']) $media = $media['results'];
+            }
+
+            if ($post_key == 'author' && $post_value) {
+                $author = $this->getUser($post_value);
+                if (array_key_exists('results', $author) && $author['results']) $author = $author['results'];
             }
         }
 
@@ -67,20 +70,30 @@ class CMSServiceProvider extends ServiceProvider
         $post['featured_media'] = new \App\CMS\Media();
         if (array_key_exists('featured_media', $post) && $media) $post['featured_media'] = $media;
 
+        $post['author'] = new \App\CMS\User();
+        if (array_key_exists('author', $post) && $author) $post['author'] = $author;
+
         return $post;
     }
 
     public function categories($args = null)
     {
         if (!$args) $args = new \App\Providers\Params\Category();
-        return $this->reader->categories($args);
+        $categories = $this->reader->categories($args);
+        if (array_key_exists('results', $categories) && $categories['results']) {
+            foreach ($categories['results'] as $category_key => $category) {
+                $categories['results'][$category_key] =  new \App\CMS\Category($category);
+            }
+        }
+
+        return $categories;
     }
 
     public function getCategory($id, $args = null)
     {
         if (!$args) $args = new \App\Providers\Params\Category();
         $category = $this->reader->getCategory($id, $args);
-        if (array_key_exists('results', $category) && $category['results']) {
+        if ($category && array_key_exists('results', $category) && $category['results']) {
             $category['results'] = new \App\CMS\Category($category['results']);
         }
         return $category;
@@ -98,13 +111,11 @@ class CMSServiceProvider extends ServiceProvider
     {
         if (!$args) $args = new \App\Providers\Params\Media();
         $getMedias = $this->reader->medias($args);
-        $medias = [];
         if (array_key_exists('results', $getMedias) && $getMedias['results']) {
-            foreach ($getMedias['results'] as $media) {
-                $medias[] = new \App\CMS\Media($media);
+            foreach ($getMedias['results'] as $media_key => $media) {
+                $getMedias['results'][$media_key] = new \App\CMS\Media($media);
             }
         }
-        $getMedias['results'] = $medias;
         return $getMedias;
     }
 
@@ -112,9 +123,29 @@ class CMSServiceProvider extends ServiceProvider
     {
         if (!$args) $args = new \App\Providers\Params\Media();
         $media = $this->reader->getMedia($id, $args);
-        if (array_key_exists('results', $media) && $media['results']) {
+        if ($media && array_key_exists('results', $media) && $media['results']) {
             $media['results'] = new \App\CMS\Media($media['results']);
         }
         return $media;
+    }
+
+    public function users($args = null)
+    {
+        if (!$args) $args = new \App\Providers\Params\User();
+        $getUsers = $this->reader->users($args);
+        if (array_key_exists('results', $getUsers) && $getUsers['results']) {
+            foreach ($getUsers['results'] as $user_key => $user) {
+                $getUsers['results'][$user_key] = new \App\CMS\User($user);
+            }
+        }
+        return $getUsers;
+    }
+
+    public function getUser($id, $args = null)
+    {
+        if (!$args) $args = new \App\Providers\Params\User();
+        $user = $this->reader->getUser($id, $args);
+        if ($user && array_key_exists('results', $user) && $user['results']) $user['results'] = new \App\CMS\User($user['results']);
+        return $user;
     }
 }

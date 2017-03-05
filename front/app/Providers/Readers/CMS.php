@@ -98,6 +98,30 @@ class CMS implements CMSInterface
     }
 
     /**
+     * Get all users
+     *
+     * @uses   obj      \App\Providers\Params\User  params for User's arguments
+     * @param  obj      $args
+     * @return array
+     */
+    public function users(\App\Providers\Params\User $args = null)
+    {
+        return $this->get('users', $args ? $args->toArray() : []);
+    }
+
+    /**
+     * Get specific user by ID
+     * @uses   obj      \App\Providers\Params\User  params for Media's arguments
+     * @param  str      $id
+     * @param  obj      $args
+     * @return array
+     */
+    public function getUser($id, \App\Providers\Params\User $args = null)
+    {
+        return $this->get("users/{$id}", $args ? $args->toArray() : []);
+    }
+
+    /**
      * Get data from API
      *
      * @param  string   $method

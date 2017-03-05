@@ -19,7 +19,7 @@ return [
 
     'useCache' => [
         'view' => false,
-        'api' => true
+        'api' => false
     ]
 
 ];
