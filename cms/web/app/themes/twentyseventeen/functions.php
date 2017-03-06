@@ -19,6 +19,15 @@ function my_custom_fonts() {
             font-size: 14px;
             color: #555555;
         }
+
+        .editor-preview pre kbd,
+        .editor-preview pre code,
+        .editor-preview-side pre kbd,
+        .editor-preview-side pre code
+        {
+            background: none!important;
+        }
+
     </style>
     ";
 }
