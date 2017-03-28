@@ -213,7 +213,7 @@ class Post extends Model
 
     public function getLinkAttribute($value)
     {
-        return route('post', [
+        return route('site/post', [
             'category_slug' => $this->attributes['categories'][0]->slug,
             'post_slug' => $this->attributes['slug'],
             'post_id' => $this->attributes['id']

@@ -134,6 +134,12 @@ class CMS implements CMSInterface
         $cacheKey = \SSZ\CMS\Components\CMSHelper::cacheKeygen([$method, $query]);
         if (($return = Cache::get($cacheKey)) && $this->useCache) return $return;
 
+        $return = [
+            'results' => [],
+            'total'   => 0,
+            'pages'   => 0
+        ];
+
         try {
             $response = $this->client->get($this->endpoint . $method, $query);
             $return = [
@@ -147,19 +153,19 @@ class CMS implements CMSInterface
                 Cache::forever("staticReaderCache_{$cacheKey}", $return);
             }
         } catch (RequestException $e) {
+
             $error['message']   = $e->getMessage();
             $error['method']    = $method;
             $error['query']     = $query;
+
             if ($e->getResponse()) $error['code'] = $e->getResponse()->getStatusCode();
-            $return = [
-                'error'   => $error,
-                'results' => [],
-                'total'   => 0,
-                'pages'   => 0
-            ];
+
+            $return['error']    = $error;
+
             \Log::error(__METHOD__ . ' No data return in CMS Reader API [[[]]] ' . print_r($return, true));
-            if (($return = Cache::get("staticReaderCache_{$cacheKey}")) && $this->useCache) return $return;
+            if (Cache::get("staticReaderCache_{$cacheKey}") && $this->useCache) return Cache::get("staticReaderCache_{$cacheKey}");
         }
+
         return $return;
     }
 }

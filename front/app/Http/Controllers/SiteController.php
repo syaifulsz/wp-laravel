@@ -40,12 +40,24 @@ class SiteController extends Controller
 
          $data = [
              'pageTitle' => '',
-             'post' => []
+             'post' => [],
+             'postUrl' => ''
          ];
          $data['post'] = array_key_exists('results', $post) && $post['results'] ? $post['results'] : [];
+
+         if (empty($data['post']->id)) abort(404);
+
          if ($data['post']) {
              $data['pageTitle'] = $data['post']->title;
          }
+
+         $data['postUrl'] = route('site/post', [
+             'category_slug' => $data['post']->categories[0]->slug,
+             'post_slug' => $data['post']->slug,
+             'post_id' => $data['post']->id
+         ]);
+
+         if (url()->current() != $data['postUrl']) return redirect($data['postUrl'], 301);
 
          View::share($data);
          return view('blog.post');
