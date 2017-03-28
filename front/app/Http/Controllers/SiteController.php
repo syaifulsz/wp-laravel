@@ -12,12 +12,10 @@ class SiteController extends Controller
 {
     /**
      * Home Page
-     * @return View::class();
      */
     public function index()
     {
-        $cms = new \CMS();
-        $posts = $cms->posts();
+        $posts = \CMS::posts();
 
         $data = [
             'pageTitle' => 'Blog',
@@ -31,15 +29,14 @@ class SiteController extends Controller
 
     /**
      * Article Page
+     *
      * @param $category_slug
      * @param $post_slug
      * @param $post_id
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function post($category_slug, $post_slug, $post_id)
      {
-         $cms = new \CMS();
-         $post = $cms->getPost($post_id);
+         $post = \CMS::getPost($post_id);
 
          $data = [
              'pageTitle' => '',

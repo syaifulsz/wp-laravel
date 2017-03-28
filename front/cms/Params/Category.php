@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers\Params;
+namespace SSZ\CMS\Params;
 
 use Illuminate\Database\Eloquent\Model;
 

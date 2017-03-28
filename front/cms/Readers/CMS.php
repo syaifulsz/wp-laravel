@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers\Readers;
+namespace SSZ\CMS\Readers;
 
 use Illuminate\Support\Facades\Cache;
 
@@ -23,12 +23,12 @@ class CMS implements CMSInterface
     /**
      * Get all posts
      *
-     * @uses   \App\Providers\Params\Post  params for Post's arguments
+     * @uses   \SSZ\CMS\Params\Post  params for Post's arguments
      *
      * @param  obj      $args
      * @return array
      */
-    public function posts(\App\Providers\Params\Post $args = null)
+    public function posts(\SSZ\CMS\Params\Post $args = null)
     {
         return $this->get('posts', $args ? $args->toArray() : []);
     }
@@ -36,13 +36,13 @@ class CMS implements CMSInterface
     /**
      * Get specific post by ID
      *
-     * @uses   \App\Providers\Params\Post  params for Post's arguments
+     * @uses   \SSZ\CMS\Params\Post  params for Post's arguments
      *
      * @param  int      $id                post ID
      * @param  obj      $args
      * @return array
      */
-    public function getPost($id, \App\Providers\Params\Post $args = null)
+    public function getPost($id, \SSZ\CMS\Params\Post $args = null)
     {
         return $this->get("posts/{$id}", $args ? $args->toArray() : []);
     }
@@ -50,11 +50,11 @@ class CMS implements CMSInterface
     /**
      * Get all categories
      *
-     * @uses   obj      \App\Providers\Params\Category  params for Category's arguments
+     * @uses   obj      \SSZ\CMS\Params\Category  params for Category's arguments
      * @param  obj      $args
      * @return array
      */
-    public function categories(\App\Providers\Params\Category $args = null)
+    public function categories(\SSZ\CMS\Params\Category $args = null)
     {
         return $this->get('categories', $args ? $args->toArray() : []);
     }
@@ -62,13 +62,13 @@ class CMS implements CMSInterface
     /**
      * Get specific category by ID
      *
-     * @uses   \App\Providers\Params\Category  params for Category's arguments
+     * @uses   \SSZ\CMS\Params\Category  params for Category's arguments
      *
      * @param  integer  $id                    category ID
      * @param  obj      $args
      * @return array
      */
-    public function getCategory($id, \App\Providers\Params\Category $args = null)
+    public function getCategory($id, \SSZ\CMS\Params\Category $args = null)
     {
         return $this->get("categories/{$id}", $args ? $args->toArray() : []);
     }
@@ -76,23 +76,23 @@ class CMS implements CMSInterface
     /**
      * Get all medias
      *
-     * @uses   obj      \App\Providers\Params\Media  params for Media's arguments
+     * @uses   obj      \SSZ\CMS\Params\Media  params for Media's arguments
      * @param  obj      $args
      * @return array
      */
-    public function medias(\App\Providers\Params\Media $args = null)
+    public function medias(\SSZ\CMS\Params\Media $args = null)
     {
         return $this->get('media', $args ? $args->toArray() : []);
     }
 
     /**
      * Get specific media by ID
-     * @uses   obj      \App\Providers\Params\Media  params for Media's arguments
+     * @uses   obj      \SSZ\CMS\Params\Media  params for Media's arguments
      * @param  str      $id
      * @param  obj      $args
      * @return array
      */
-    public function getMedia($id, \App\Providers\Params\Media $args = null)
+    public function getMedia($id, \SSZ\CMS\Params\Media $args = null)
     {
         return $this->get("media/{$id}", $args ? $args->toArray() : []);
     }
@@ -100,23 +100,23 @@ class CMS implements CMSInterface
     /**
      * Get all users
      *
-     * @uses   obj      \App\Providers\Params\User  params for User's arguments
+     * @uses   obj      \SSZ\CMS\Params\User  params for User's arguments
      * @param  obj      $args
      * @return array
      */
-    public function users(\App\Providers\Params\User $args = null)
+    public function users(\SSZ\CMS\Params\User $args = null)
     {
         return $this->get('users', $args ? $args->toArray() : []);
     }
 
     /**
      * Get specific user by ID
-     * @uses   obj      \App\Providers\Params\User  params for Media's arguments
+     * @uses   obj      \SSZ\CMS\Params\User  params for Media's arguments
      * @param  str      $id
      * @param  obj      $args
      * @return array
      */
-    public function getUser($id, \App\Providers\Params\User $args = null)
+    public function getUser($id, \SSZ\CMS\Params\User $args = null)
     {
         return $this->get("users/{$id}", $args ? $args->toArray() : []);
     }

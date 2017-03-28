@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Providers\Params;
+namespace SSZ\CMS\Params;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Media extends Model
+class Post extends Model
 {
     protected $fillable = [
         'context',
@@ -20,13 +20,14 @@ class Media extends Model
         'offset',
         'order',
         'orderby',
-        'parent',
-        'parent_exclude',
         'slug',
         'status',
-        'filter',
-        'media_type',
-        'mime_type'
+        'categories',
+        'categories_exclude',
+        'tags',
+        'tags_exclude',
+        'sticky',
+        'password'
     ];
 
     /**
@@ -109,18 +110,6 @@ class Media extends Model
     protected $orderby = 'date';
 
     /**
-     * Limit result set to those of particular parent ids
-     * @var array
-     */
-    protected $parent = [];
-
-    /**
-     * Limit result set to all items except those of a particular parent id
-     * @var array
-     */
-    protected $parent_exclude = [];
-
-    /**
      * Limit result set to posts with one or more specific slugs.
      * @var str
      */
@@ -133,21 +122,42 @@ class Media extends Model
     protected $status = 'publish';
 
     /**
-     * Use WP Query arguments to modify the response; private query vars
-     * require appropriate authorization.
-     * @var str
+     * Limit result set to all items that have the specified term assigned
+     * in the categories taxonomy
+     * @var array
      */
-    protected $filter;
+    protected $categories = [];
 
     /**
-     * Limit result set to attachments of a particular media type
-     * @var str     values: image, video, audio, application
+     * Limit result set to all items except those that have the specified
+     * term assigned in the categories taxonomy
+     * @var array
      */
-    protected $media_type;
+    protected $categories_exclude = [];
 
     /**
-     * Limit result set to attachments of a particular MIME type
+     * Limit result set to all items that have the specified term assigned
+     * in the tags taxonomy
+     * @var array
+     */
+    protected $tags = [];
+
+    /**
+     * Limit result set to all items except those that have the specified
+     * term assigned in the tags taxonomy
+     * @var array
+     */
+    protected $tags_exclude = [];
+
+    /**
+     * Limit result set to items that are sticky
+     * @var bool
+     */
+    protected $sticky;
+
+    /**
+     * The password for the post if it is password protected.
      * @var str
      */
-    protected $mime_type;
+    protected $password;
 }

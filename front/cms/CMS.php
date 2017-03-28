@@ -1,23 +1,19 @@
 <?php
 
-namespace App\Providers;
+namespace SSZ\CMS;
 
-// readers
-use \App\Providers\Readers\CMS;
-
-// vendors
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
-
-use Illuminate\Support\ServiceProvider;
-
-class CMSServiceProvider extends ServiceProvider
+class CMS
 {
     public function __construct()
     {
-        $this->reader = new \App\Providers\Readers\CMS();
+        $this->reader = \App::make('\SSZ\CMS\Readers\CMS');
         $this->reader->endpoint = config('cms.api');
         $this->reader->useCache = config('cms.useCache.api');
+    }
+
+    public function display()
+    {
+        return "This is a test message";
     }
 
     public function posts($page = null)
@@ -26,7 +22,7 @@ class CMSServiceProvider extends ServiceProvider
         if (array_key_exists('results', $getPost) && is_array($getPost['results']) && $getPost['results']) {
             $posts = [];
             foreach ($getPost['results'] as $post) {
-                $posts[] = new \App\CMS\Post($this->prepPost($post));
+                $posts[] = new \SSZ\CMS\Models\Post($this->prepPost($post));
             }
 
             $getPost['results'] = $posts;
@@ -67,10 +63,10 @@ class CMSServiceProvider extends ServiceProvider
 
         if (array_key_exists('categories', $post) && $categories) $post['categories'] = $categories;
 
-        $post['featured_media'] = new \App\CMS\Media();
+        $post['featured_media'] = new \SSZ\CMS\Models\Media();
         if (array_key_exists('featured_media', $post) && $media) $post['featured_media'] = $media;
 
-        $post['author'] = new \App\CMS\User();
+        $post['author'] = new \SSZ\CMS\Models\User();
         if (array_key_exists('author', $post) && $author) $post['author'] = $author;
 
         return $post;
@@ -78,11 +74,11 @@ class CMSServiceProvider extends ServiceProvider
 
     public function categories($args = null)
     {
-        if (!$args) $args = new \App\Providers\Params\Category();
+        if (!$args) $args = new \SSZ\CMS\Params\Category();
         $categories = $this->reader->categories($args);
         if (array_key_exists('results', $categories) && $categories['results']) {
             foreach ($categories['results'] as $category_key => $category) {
-                $categories['results'][$category_key] =  new \App\CMS\Category($category);
+                $categories['results'][$category_key] =  new \SSZ\CMS\Models\Category($category);
             }
         }
 
@@ -91,29 +87,29 @@ class CMSServiceProvider extends ServiceProvider
 
     public function getCategory($id, $args = null)
     {
-        if (!$args) $args = new \App\Providers\Params\Category();
+        if (!$args) $args = new \SSZ\CMS\Params\Category();
         $category = $this->reader->getCategory($id, $args);
         if ($category && array_key_exists('results', $category) && $category['results']) {
-            $category['results'] = new \App\CMS\Category($category['results']);
+            $category['results'] = new \SSZ\CMS\Models\Category($category['results']);
         }
         return $category;
     }
 
     public function getPost($id, $args = null)
     {
-        if (!$args) $args = new \App\Providers\Params\Post();
+        if (!$args) $args = new \SSZ\CMS\Params\Post();
         $getPost = $this->reader->getPost($id, $args);
-        if (array_key_exists('results', $getPost) && $getPost['results']) $getPost['results'] = new \App\CMS\Post($this->prepPost($getPost['results']));
+        if (array_key_exists('results', $getPost) && $getPost['results']) $getPost['results'] = new \SSZ\CMS\Models\Post($this->prepPost($getPost['results']));
         return $getPost;
     }
 
     public function medias($args = null)
     {
-        if (!$args) $args = new \App\Providers\Params\Media();
+        if (!$args) $args = new \SSZ\CMS\Params\Media();
         $getMedias = $this->reader->medias($args);
         if (array_key_exists('results', $getMedias) && $getMedias['results']) {
             foreach ($getMedias['results'] as $media_key => $media) {
-                $getMedias['results'][$media_key] = new \App\CMS\Media($media);
+                $getMedias['results'][$media_key] = new \SSZ\CMS\Models\Media($media);
             }
         }
         return $getMedias;
@@ -121,21 +117,21 @@ class CMSServiceProvider extends ServiceProvider
 
     public function getMedia($id, $args = null)
     {
-        if (!$args) $args = new \App\Providers\Params\Media();
+        if (!$args) $args = new \SSZ\CMS\Params\Media();
         $media = $this->reader->getMedia($id, $args);
         if ($media && array_key_exists('results', $media) && $media['results']) {
-            $media['results'] = new \App\CMS\Media($media['results']);
+            $media['results'] = new \SSZ\CMS\Models\Media($media['results']);
         }
         return $media;
     }
 
     public function users($args = null)
     {
-        if (!$args) $args = new \App\Providers\Params\User();
+        if (!$args) $args = new \SSZ\CMS\Params\User();
         $getUsers = $this->reader->users($args);
         if (array_key_exists('results', $getUsers) && $getUsers['results']) {
             foreach ($getUsers['results'] as $user_key => $user) {
-                $getUsers['results'][$user_key] = new \App\CMS\User($user);
+                $getUsers['results'][$user_key] = new \SSZ\CMS\Models\User($user);
             }
         }
         return $getUsers;
@@ -143,9 +139,9 @@ class CMSServiceProvider extends ServiceProvider
 
     public function getUser($id, $args = null)
     {
-        if (!$args) $args = new \App\Providers\Params\User();
+        if (!$args) $args = new \SSZ\CMS\Params\User();
         $user = $this->reader->getUser($id, $args);
-        if ($user && array_key_exists('results', $user) && $user['results']) $user['results'] = new \App\CMS\User($user['results']);
+        if ($user && array_key_exists('results', $user) && $user['results']) $user['results'] = new \SSZ\CMS\Models\User($user['results']);
         return $user;
     }
 }

@@ -176,7 +176,11 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\CMSServiceProvider::class,
+
+        /**
+         * SSZ/CMS Service Provider
+         */
+        SSZ\CMS\CMSServiceProvider::class,
 
     ],
 
@@ -227,8 +231,8 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
 
-        'CMS' => \App\Providers\CMSServiceProvider::class,
         'ViewHelper' => \App\Components\ViewHelper::class,
+        'CMS' => \SSZ\CMS\Facades\CMS::class,
 
     ],
 
