@@ -3,8 +3,6 @@
 @section('content')
     <div class="container">
         @foreach ($posts as $post)
-            {{-- {{ var_dump($post->featured_media->media_details['sizes']) }} --}}
-            {{-- {{ var_dump($post->toArray()) }} --}}
             <div class="panel  panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">{{ $post->title }}</h3>

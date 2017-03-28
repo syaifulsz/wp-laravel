@@ -22,6 +22,8 @@
     "bootstrap-sass": "^3.3.7",
     "jquery": "^3.1.1",
     "html5shiv": "^3.7.3",
-    "respond": "^1.4.2"
+    "respond": "^1.4.2",
+    "bootstrap-helper-blocks": "^1.0.1",
+    "bootstrap-helper-margin-padding": "^1.1.0"
   }
 }

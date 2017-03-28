@@ -24,7 +24,17 @@ module.exports = function(grunt) {
             options: {
                 update: true
             },
+            dev: {
+                files: {
+                    '<%= config.public_path %>/dist/stylesheets/global.css': [
+                        '<%= config.assets_path %>/src/stylesheets/global.sass'
+                    ]
+                }
+            },
             global: {
+                options: {
+                    style: 'compressed'
+                },
                 files: {
                     '<%= config.public_path %>/dist/stylesheets/global.min.css': [
                         '<%= config.assets_path %>/src/stylesheets/global.sass'
@@ -83,6 +93,15 @@ module.exports = function(grunt) {
                     interrupt: true
                 },
             },
+            css_dev: {
+                files: ['**/*.{sass,scss}'],
+                tasks: ['sass:dev'],
+                options: {
+                    spawn: false,
+                    livereload: true,
+                    interrupt: true
+                },
+            },
             js: {
                 files: ['**/*.js'],
                 tasks: ['uglify:global'],
@@ -106,6 +125,7 @@ module.exports = function(grunt) {
     // Default task(s).
     grunt.registerTask('default', ['clean:public_path', 'sass', 'uglify', 'copy']);
     grunt.registerTask('watch_css', ['watch:css']);
+    grunt.registerTask('watch_css_dev', ['watch:css_dev']);
     grunt.registerTask('watch_js', ['watch:js']);
 
 };
