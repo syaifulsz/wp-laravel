@@ -131,7 +131,7 @@ class CMS implements CMSInterface
     public function get($method, array $query = [])
     {
         $query = ['query' => $query];
-        $cacheKey = $method . http_build_query($query);
+        $cacheKey = \SSZ\CMS\Components\CMSHelper::cacheKeygen([$method, $query]);
         if (($return = Cache::get($cacheKey)) && $this->useCache) return $return;
 
         try {
@@ -144,21 +144,21 @@ class CMS implements CMSInterface
 
             if ($return['results']) {
                 Cache::put($cacheKey, $return, 60);
-                Cache::forever("previous_{$cacheKey}", $return);
+                Cache::forever("staticReaderCache_{$cacheKey}", $return);
             }
         } catch (RequestException $e) {
-            $error['message'] = $e->getMessage();
-            if ($e->getResponse()) {
-                $error['code'] = $e->getResponse()->getStatusCode();
-            }
+            $error['message']   = $e->getMessage();
+            $error['method']    = $method;
+            $error['query']     = $query;
+            if ($e->getResponse()) $error['code'] = $e->getResponse()->getStatusCode();
             $return = [
                 'error'   => $error,
                 'results' => [],
                 'total'   => 0,
                 'pages'   => 0
             ];
-            \Log::error(__METHOD__, $return);
-            if (($return = Cache::get("previous_{$cacheKey}")) && $this->useCache) return $return;
+            \Log::error(__METHOD__ . ' No data return in CMS Reader API [[[]]] ' . print_r($return, true));
+            if (($return = Cache::get("staticReaderCache_{$cacheKey}")) && $this->useCache) return $return;
         }
         return $return;
     }
