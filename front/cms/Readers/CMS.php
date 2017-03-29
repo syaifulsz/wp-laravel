@@ -12,6 +12,7 @@ class CMS implements CMSInterface
     public $client;
     public $endpoint;
     public $useCache;
+    public $cacheDuration = 1; // 1 minute
 
     public function __construct($endpoint = null, $auth = null, $useCache = false)
     {
@@ -149,7 +150,7 @@ class CMS implements CMSInterface
             ];
 
             if ($return['results']) {
-                Cache::put($cacheKey, $return, 60);
+                Cache::put($cacheKey, $return, $this->cacheDuration);
                 Cache::forever("staticReaderCache_{$cacheKey}", $return);
             }
         } catch (RequestException $e) {

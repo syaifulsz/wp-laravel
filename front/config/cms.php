@@ -8,8 +8,8 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'api' => env('CMS_API_ENDPOINT', 'http://localhost:9088/wp-json/wp/v2/'),
-    'media' => env('CMS_MEDIA_ENDPOINT', 'http://media.ssz.io/'),
+    'api'   => env('CMS_API_ENDPOINT',      'http://localhost:9088/wp-json/wp/v2/'),
+    'media' => env('CMS_MEDIA_ENDPOINT',    'http://media.ssz.io/'),
 
     /*
     |--------------------------------------------------------------------------
@@ -17,9 +17,9 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'useCache' => [
-        'view' => false,
-        'api' => false
+    'useCache'  => [
+        'view'  => env('CMS_CACHE_VIEW',    false),
+        'api'   => env('CMS_CACHE_API',     false),
     ]
 
 ];
